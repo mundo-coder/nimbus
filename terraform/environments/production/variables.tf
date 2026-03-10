@@ -251,6 +251,12 @@ variable "web_platform" {
   }
 }
 
+variable "web_custom_domain" {
+  description = "Custom domain for the web app (e.g., 'nimbus.mun-do-ai.dev'). Leave empty to use the default workers.dev URL."
+  type        = string
+  default     = ""
+}
+
 variable "deployment_name" {
   description = "Unique deployment name used in URLs and resource names. Use something unique like your GitHub username or company name (e.g., 'acme', 'johndoe'). This will create URLs like: open-inspect-{deployment_name}.vercel.app"
   type        = string

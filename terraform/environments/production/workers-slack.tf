@@ -23,7 +23,7 @@ module "slack_bot_worker" {
   source = "../../modules/cloudflare-worker"
 
   account_id  = var.cloudflare_account_id
-  worker_name = "open-inspect-slack-bot-${local.name_suffix}"
+  worker_name = "${local.name_suffix}-slack-bot"
   script_path = local.slack_bot_script_path
 
   kv_namespaces = [
@@ -36,7 +36,7 @@ module "slack_bot_worker" {
   service_bindings = [
     {
       binding_name = "CONTROL_PLANE"
-      service_name = "open-inspect-control-plane-${local.name_suffix}"
+      service_name = "${local.name_suffix}-control-plane"
     }
   ]
 

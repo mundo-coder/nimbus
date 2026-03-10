@@ -2,15 +2,17 @@ locals {
   name_suffix = var.deployment_name
 
   # URLs for cross-service configuration
-  control_plane_host = "open-inspect-control-plane-${local.name_suffix}.${var.cloudflare_worker_subdomain}.workers.dev"
+  control_plane_host = "${local.name_suffix}-control-plane.${var.cloudflare_worker_subdomain}.workers.dev"
   control_plane_url  = "https://${local.control_plane_host}"
   ws_url             = "wss://${local.control_plane_host}"
 
-  # Web app URL depends on deployment platform
-  web_app_url = var.web_platform == "cloudflare" ? (
-    "https://open-inspect-web-${local.name_suffix}.${var.cloudflare_worker_subdomain}.workers.dev"
+  # Web app URL — custom domain when set, otherwise workers.dev
+  web_app_url = var.web_custom_domain != "" ? (
+    "https://${var.web_custom_domain}"
+    ) : var.web_platform == "cloudflare" ? (
+    "https://${local.name_suffix}-web.${var.cloudflare_worker_subdomain}.workers.dev"
     ) : (
-    "https://open-inspect-${local.name_suffix}.vercel.app"
+    "https://${local.name_suffix}.vercel.app"
   )
 
   # Worker script paths (deterministic output locations)

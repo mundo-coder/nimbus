@@ -12,7 +12,7 @@ import type { CorrelationContext } from "../logger";
 const log = createLogger("modal-client");
 
 // Modal app name
-const MODAL_APP_NAME = "open-inspect";
+const MODAL_APP_NAME = "nimbus";
 
 /**
  * Construct the Modal base URL from workspace name.

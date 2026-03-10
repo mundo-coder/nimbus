@@ -41,7 +41,7 @@ resource "null_resource" "web_app_cloudflare_secrets" {
     environment = {
       CLOUDFLARE_API_TOKEN     = var.cloudflare_api_token
       CLOUDFLARE_ACCOUNT_ID    = var.cloudflare_account_id
-      WORKER_NAME              = "open-inspect-web-${local.name_suffix}"
+      WORKER_NAME              = "${local.name_suffix}-web"
       GITHUB_CLIENT_SECRET     = var.github_client_secret
       NEXTAUTH_SECRET          = var.nextauth_secret
       INTERNAL_CALLBACK_SECRET = var.internal_callback_secret
@@ -57,7 +57,7 @@ resource "local_file" "web_app_wrangler_production" {
   count    = var.web_platform == "cloudflare" ? 1 : 0
   filename = "${var.project_root}/packages/web/wrangler.production.toml"
   content  = <<-TOML
-    name = "open-inspect-web-${local.name_suffix}"
+    name = "${local.name_suffix}-web"
     main = ".open-next/worker.js"
     compatibility_date = "2025-08-15"
     compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
@@ -76,7 +76,7 @@ resource "local_file" "web_app_wrangler_production" {
 
     [[services]]
     binding = "CONTROL_PLANE_WORKER"
-    service = "open-inspect-control-plane-${local.name_suffix}"
+    service = "${local.name_suffix}-control-plane"
   TOML
 }
 

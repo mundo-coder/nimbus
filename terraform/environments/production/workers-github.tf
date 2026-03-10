@@ -21,7 +21,7 @@ module "github_bot_worker" {
   source = "../../modules/cloudflare-worker"
 
   account_id  = var.cloudflare_account_id
-  worker_name = "open-inspect-github-bot-${local.name_suffix}"
+  worker_name = "${local.name_suffix}-github-bot"
   script_path = local.github_bot_script_path
 
   kv_namespaces = [
@@ -34,7 +34,7 @@ module "github_bot_worker" {
   service_bindings = [
     {
       binding_name = "CONTROL_PLANE"
-      service_name = "open-inspect-control-plane-${local.name_suffix}"
+      service_name = "${local.name_suffix}-control-plane"
     }
   ]
 

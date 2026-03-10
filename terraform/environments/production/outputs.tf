@@ -68,7 +68,7 @@ output "github_bot_worker_name" {
 # Web App
 output "web_app_url" {
   description = "Web app URL"
-  value       = var.web_platform == "vercel" ? module.web_app[0].production_url : local.web_app_url
+  value       = local.web_app_url
 }
 
 output "web_app_platform" {
@@ -78,7 +78,7 @@ output "web_app_platform" {
 
 output "web_app_project_id" {
   description = "Vercel project ID (null when using Cloudflare)"
-  value       = var.web_platform == "vercel" ? module.web_app[0].project_id : null
+  value       = null
 }
 
 # Modal

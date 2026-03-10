@@ -169,11 +169,13 @@ export class SessionPullRequestService {
         };
       }
 
-      // Use user OAuth if available, otherwise fall back to GitHub App token
-      // (e.g. sessions triggered from Linear or other integrations without user GitHub OAuth)
-      const prAuth = input.promptingAuth ?? appAuth;
+      // Always create PRs as the bot (app auth) for consistent identity,
+      // and credit the requesting user in the PR body.
+      const prAuth = appAuth;
 
-      const fullBody = input.body + `\n\n---\n*Created with [Open-Inspect](${input.sessionUrl})*`;
+      const requestedBy = input.promptingUserId ? `\n\nRequested by @${input.promptingUserId}` : "";
+      const fullBody =
+        input.body + `\n\n---${requestedBy}\n*Created with [Nimbus](${input.sessionUrl})*`;
 
       const prResult = await this.deps.sourceControlProvider.createPullRequest(prAuth, {
         repository: repoInfo,

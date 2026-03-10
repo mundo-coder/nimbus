@@ -21,7 +21,7 @@ module "linear_bot_worker" {
   source = "../../modules/cloudflare-worker"
 
   account_id  = var.cloudflare_account_id
-  worker_name = "open-inspect-linear-bot-${local.name_suffix}"
+  worker_name = "${local.name_suffix}-linear-bot"
   script_path = local.linear_bot_script_path
 
   kv_namespaces = [
@@ -34,7 +34,7 @@ module "linear_bot_worker" {
   service_bindings = [
     {
       binding_name = "CONTROL_PLANE"
-      service_name = "open-inspect-control-plane-${local.name_suffix}"
+      service_name = "${local.name_suffix}-control-plane"
     }
   ]
 
@@ -46,7 +46,7 @@ module "linear_bot_worker" {
     { name = "DEPLOYMENT_NAME", value = var.deployment_name },
     { name = "DEFAULT_MODEL", value = "claude-sonnet-4-6" },
     { name = "LINEAR_CLIENT_ID", value = var.linear_client_id },
-    { name = "WORKER_URL", value = "https://open-inspect-linear-bot-${local.name_suffix}.${var.cloudflare_worker_subdomain}.workers.dev" },
+    { name = "WORKER_URL", value = "https://${local.name_suffix}-linear-bot.${var.cloudflare_worker_subdomain}.workers.dev" },
   ]
 
   secrets = [

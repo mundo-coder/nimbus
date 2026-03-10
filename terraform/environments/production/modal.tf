@@ -24,13 +24,13 @@ module "modal_app" {
   modal_token_id     = var.modal_token_id
   modal_token_secret = var.modal_token_secret
 
-  app_name      = "open-inspect"
+  app_name      = "nimbus"
   workspace     = var.modal_workspace
   deploy_path   = "${var.project_root}/packages/modal-infra"
   deploy_module = "deploy"
   source_hash   = data.external.modal_source_hash.result.hash
 
-  volume_name = "open-inspect-data"
+  volume_name = "nimbus-data"
 
   secrets = [
     {

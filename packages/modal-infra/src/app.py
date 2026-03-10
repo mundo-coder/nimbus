@@ -15,7 +15,7 @@ from .log_config import get_logger
 log = get_logger("app")
 
 # Main Modal application
-app = modal.App("open-inspect")
+app = modal.App("nimbus")
 
 # Image for Modal functions (not sandbox)
 # Includes all dependencies needed by the function modules at import time
@@ -116,4 +116,4 @@ def validate_control_plane_url(url: str | None) -> bool:
 
 
 # Volume for persistent storage (snapshot metadata, logs)
-inspect_volume = modal.Volume.from_name("open-inspect-data", create_if_missing=True)
+inspect_volume = modal.Volume.from_name("nimbus-data", create_if_missing=True)

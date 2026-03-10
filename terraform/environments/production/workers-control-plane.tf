@@ -20,7 +20,7 @@ module "control_plane_worker" {
   source = "../../modules/cloudflare-worker"
 
   account_id  = var.cloudflare_account_id
-  worker_name = "open-inspect-control-plane-${local.name_suffix}"
+  worker_name = "${local.name_suffix}-control-plane"
   script_path = local.control_plane_script_path
 
   kv_namespaces = [
@@ -41,13 +41,13 @@ module "control_plane_worker" {
     var.enable_slack_bot ? [
       {
         binding_name = "SLACK_BOT"
-        service_name = "open-inspect-slack-bot-${local.name_suffix}"
+        service_name = "${local.name_suffix}-slack-bot"
       }
     ] : [],
     var.enable_linear_bot ? [
       {
         binding_name = "LINEAR_BOT"
-        service_name = "open-inspect-linear-bot-${local.name_suffix}"
+        service_name = "${local.name_suffix}-linear-bot"
       }
     ] : []
   )
@@ -85,9 +85,9 @@ module "control_plane_worker" {
 
   compatibility_date  = "2024-09-23"
   compatibility_flags = ["nodejs_compat"]
-  migration_tag       = "v2"
-  migration_old_tag   = "v1"
-  new_sqlite_classes  = ["SchedulerDO"]
+  migration_tag       = "v1"
+  migration_old_tag   = ""
+  new_sqlite_classes  = []
 
   cron_triggers = ["* * * * *"]
 
